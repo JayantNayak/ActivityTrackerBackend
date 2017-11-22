@@ -46,7 +46,7 @@ public class ActivityYogaController {
 		int rate = 5;
 		String comment = "good went well";
 		Yoga act = new Yoga(date1 ,dr , rate,  comment);
-		//yogaService.saveActivity(act);
+		yogaService.saveActivity(act);
 		//return new ResponseEntity<Yoga>(yogaService.findById(act.getId()), HttpStatus.OK);
 		return new ResponseEntity<Yoga>(act, HttpStatus.OK);
 		
