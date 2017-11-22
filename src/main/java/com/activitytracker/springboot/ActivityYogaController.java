@@ -23,7 +23,7 @@ import com.activitytracker.model.service.YogaActivityService;
 import com.activitytracker.springboot.util.CustomErrorType;
 
 @RestController
-@RequestMapping("/api")
+//@RequestMapping("/api")
 public class ActivityYogaController {
 	
 	public static final Logger logger = LoggerFactory.getLogger(ActivityYogaController.class);
