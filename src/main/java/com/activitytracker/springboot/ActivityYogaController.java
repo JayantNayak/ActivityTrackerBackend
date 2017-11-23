@@ -39,7 +39,7 @@ public class ActivityYogaController {
 
 		
 		//LocalDate date1 =  LocalDate.of(2017,Month.OCTOBER,6);
-		LocalDateTime date1= LocalDateTime.now();
+		Long date1=System.currentTimeMillis();
 		//LocalDate date = new LocalDate(2017,10,10);
 		//Duration dr = new Duration((long) 12345);
 		Long dr =  12345L;
