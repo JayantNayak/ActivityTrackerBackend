@@ -2,11 +2,7 @@ spring.datasource.url=jdbc:postgresql://ec2-54-225-88-191.compute-1.amazonaws.co
 spring.datasource.username=nstwszawzhuuba
 spring.datasource.password=74c4287e2dbc8fe49578ec9ed75ea6926f813e1b699ba3c84adf8ad12db2a1b6
 spring.datasource.driverClassName=org.postgresql.Driver
-spring.datasource.maxActive=10
-spring.datasource.maxIdle=5
-spring.datasource.minIdle=2
-spring.datasource.initialSize=5
-spring.datasource.removeAbandoned=true
+spring.jpa.hibernate.ddl-auto=update
 
 
 /// working model

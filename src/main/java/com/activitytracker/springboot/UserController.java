@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.actitvitytracker.model.User;
-import com.activitytracker.model.service.UserService;
+import com.activitytracker.springboot.model.User;
+import com.activitytracker.springboot.service.UserService;
 import com.activitytracker.springboot.util.CustomErrorType;
 
 @RestController

@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.actitvitytracker.model.Shooting;
-import com.actitvitytracker.model.Yoga;
-import com.activitytracker.model.service.YogaActivityService;
+import com.activitytracker.springboot.model.Shooting;
+import com.activitytracker.springboot.model.Yoga;
+import com.activitytracker.springboot.service.YogaActivityService;
 import com.activitytracker.springboot.util.CustomErrorType;
 
 @RestController
@@ -34,7 +34,7 @@ public class ActivityYogaController {
 	
 		
 	
-	@RequestMapping(value = "/activity/singleyoga")
+	@RequestMapping(value = "/api/activity/singleyoga")
 	public ResponseEntity<?> createSingleYoga() {
 
 		

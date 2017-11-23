@@ -6,8 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.actitvitytracker.model.Yoga;
-import com.activitytracker.model.service.YogaActivityService;
+import com.activitytracker.springboot.model.Yoga;
 import com.activitytracker.springboot.repository.YogaRepository;
 
 
