@@ -47,4 +47,15 @@ public class UserServiceImpl implements UserService{
 		return findById(id) != null;
 	}
 
+	@Override
+	public boolean isUserExistWithEmail(String email) {
+		// TODO Auto-generated method stub
+		List<User> usersWithSameEmail = userRepository.getUsersWithEmail(email);
+		if(usersWithSameEmail.size()>0)
+		{
+			return true;
+		}
+		return false;
+	}
+
 }

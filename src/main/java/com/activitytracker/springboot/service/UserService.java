@@ -20,4 +20,6 @@ public interface UserService {
 	void saveUser(User user);
 
 	void updateUser(User user);
+	
+	boolean isUserExistWithEmail(String email);
 }

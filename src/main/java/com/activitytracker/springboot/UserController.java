@@ -47,6 +47,20 @@ public class UserController {
 		}
 		return new ResponseEntity<User>(users.get(0), HttpStatus.OK);
 	}
+	@RequestMapping("/singleuser2")
+	public ResponseEntity<?> getSingleUserWithoutSports() {
+		
+		User usersingle = new User("Jayant","Nayak","Jayant007","mypassword");
+		//usersingle.setId((long)123);
+		userService.saveUser(usersingle);
+		
+		List<User> users = userService.findAllUsers();
+		if (users.isEmpty()) {
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+			// You many decide to return HttpStatus.NOT_FOUND
+		}
+		return new ResponseEntity<User>(users.get(0), HttpStatus.OK);
+	}
 
 	// -------------------Retrieve All Users---------------------------------------------
 
@@ -80,7 +94,7 @@ public class UserController {
 	public ResponseEntity<?> createUser(@RequestBody User user, UriComponentsBuilder ucBuilder) {
 		logger.info("Creating User : {}", user);
 
-		if (userService.isUserExist(user.getId())) {
+		if (userService.isUserExistWithEmail(user.getEmailId())) {
 			logger.error("Unable to create. A User with emailID {} already exist", user.getEmailId());
 			return new ResponseEntity(new CustomErrorType("Unable to create. A User with emailId " + 
 			user.getEmailId() + " already exist."),HttpStatus.CONFLICT);
