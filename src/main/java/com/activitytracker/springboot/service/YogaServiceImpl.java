@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.activitytracker.springboot.model.User;
 import com.activitytracker.springboot.model.Yoga;
 import com.activitytracker.springboot.repository.YogaRepository;
 
@@ -17,10 +18,16 @@ public class YogaServiceImpl implements YogaActivityService{
 
 	@Autowired
 	private YogaRepository yogaRepository;
+	
+	@Autowired
+	UserService userService;
 
 	@Override
 	public void saveActivity(Yoga activity) {
+		User parentUser = userService.findById(activity.getUserId());
+		activity.setParentUser(parentUser);
 		yogaRepository.save(activity);
+		
 		
 	}
 
@@ -63,7 +70,10 @@ public class YogaServiceImpl implements YogaActivityService{
 	
 	@Override
 	public List<Yoga> getActivitiesForUserFromDate(long userid, String startDate) {
-		return yogaRepository.getActivitiesForUserFromDate(userid);
+		
+		return null;
+		// uncomment
+		//return yogaRepository.getActivitiesForUserFromDate(userid);
 	}
 
 }

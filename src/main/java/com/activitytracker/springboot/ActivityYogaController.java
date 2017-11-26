@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.activitytracker.springboot.model.Shooting;
+import com.activitytracker.springboot.model.User;
 import com.activitytracker.springboot.model.Yoga;
 import com.activitytracker.springboot.service.YogaActivityService;
 import com.activitytracker.springboot.util.CustomErrorType;
@@ -45,7 +46,8 @@ public class ActivityYogaController {
 		Long dr =  12345L;
 		int rate = 5;
 		String comment = "good went well";
-		Yoga act = new Yoga(date1 ,dr , rate,  comment);
+		Long userID = 1L;
+		Yoga act = new Yoga(date1 ,dr , rate,  comment,userID);
 		yogaService.saveActivity(act);
 		//return new ResponseEntity<Yoga>(yogaService.findById(act.getId()), HttpStatus.OK);
 		return new ResponseEntity<Yoga>(act, HttpStatus.OK);
@@ -72,11 +74,6 @@ public class ActivityYogaController {
 		public ResponseEntity<?> createUser(@RequestBody Yoga activity, UriComponentsBuilder ucBuilder) {
 			logger.info("Creating Activity Yoga : {}", activity);
 
-			if (yogaService.isActivityExist(activity.getId())) {
-				logger.error("Unable to create. A  yoga activity with username {} already exist", activity.getId());
-				return new ResponseEntity(new CustomErrorType("Unable to create. A User with name " + 
-						activity.getId() + " already exist."),HttpStatus.CONFLICT);
-			}
 			yogaService.saveActivity(activity);
 
 			HttpHeaders headers = new HttpHeaders();
@@ -94,6 +91,35 @@ public class ActivityYogaController {
 			yogaService.deleteAllActivities();
 			return new ResponseEntity<Yoga>(HttpStatus.NO_CONTENT);
 		}
+		
+		
+		
+		///---------------------Delete A Yoga ---------------------------------
+		@RequestMapping(value = YogaActivityService.YOGA_SVC_PATH +"/{id}", method = RequestMethod.DELETE)
+		public ResponseEntity<?> deleteYoga(@PathVariable("id") long id) {
+			logger.info("Fetching & Deleting yoga with id {}", id);
+
+			Yoga yoga = yogaService.findById(id);
+			if (yoga == null) {
+				logger.error("Unable to delete. yoga with id {} not found.", id);
+				return new ResponseEntity(new CustomErrorType("Unable to delete. Yoga with id " + id + " not found."),
+						HttpStatus.NOT_FOUND);
+			}
+			yogaService.deleteActivityById(id);
+			return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	
 	// -- Retrieve yoga activities for a particular user-----
 		
@@ -103,6 +129,10 @@ public class ActivityYogaController {
 			
 			return new ResponseEntity<List<Yoga>>(yogaService.getActivitiesForUserFromDate(userId,startDate),HttpStatus.OK);
 		}
+		
+		
+		
+		
 	
 		
 		

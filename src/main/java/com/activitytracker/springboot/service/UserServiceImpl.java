@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.activitytracker.springboot.model.User;
+import com.activitytracker.springboot.model.UserRole;
 import com.activitytracker.springboot.repository.UserRepository;
 
 
@@ -17,6 +18,9 @@ public class UserServiceImpl implements UserService{
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private UserRoleService userRoleService;
 
 	public User findById(Long id) {
 		return userRepository.findOne(id);
@@ -24,6 +28,8 @@ public class UserServiceImpl implements UserService{
 
 	public void saveUser(User user) {
 		userRepository.save(user);
+		/* create corresponding authentication in userrole*/
+		userRoleService.saveUserRole(new UserRole("USER",user));
 	}
 
 	public void updateUser(User user){

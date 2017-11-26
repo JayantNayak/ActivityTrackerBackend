@@ -1,14 +1,15 @@
 package com.activitytracker.springboot.model;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 //import org.joda.time.LocalDate;
 
@@ -18,12 +19,15 @@ public class Yoga {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	
 
 	@Column(name = "DURATION", nullable = false)
 	// @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDuration")
 	// @Type(type="org.joda.time.contrib.hibernate.PersistentDuration")
 	// @Type(type="org.joda.time.Duration")
 	private Long duration;
+	
 
 	@Column(name = "DATETIME", nullable = false)
 	// @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
@@ -32,18 +36,29 @@ public class Yoga {
 	@Column(name = "COMMENT")
 	private String comment;
 
+
 	@Column(name = "RATING", nullable = false)
 	private int rating;
+	
 
 	@Column(name = "USERID", nullable = false)
 	private long userId;
 
+	@ManyToOne
+	@JoinColumn(name = "PARENT_USER_ID", referencedColumnName = "ID", nullable=false, updatable=false)
+	private User parentUser;
+	
+	
 	public long getUserId() {
 		return userId;
 	}
 
 	public void setUserId(long userId) {
 		this.userId = userId;
+	}
+
+	public void setParentUser(User parentUser) {
+		this.parentUser = parentUser;
 	}
 
 	public int getRating() {
@@ -90,18 +105,20 @@ public class Yoga {
 
 	}
 
-	public Yoga(Long datetime, Long duration, int rating, String comment) {
+	public Yoga(Long datetime, Long duration, int rating, String comment, Long userId) {
 
 		this.datetime = datetime;
 		this.duration = duration;
 		this.rating = rating;
 		this.comment = comment;
+		this.userId = userId;
 	}
 
-	public Yoga(Long datetime, Long duration, int rating) {
+	public Yoga(Long datetime, Long duration, int rating, Long userId) {
 
 		this.datetime = datetime;
 		this.duration = duration;
 		this.rating = rating;
+		this.userId = userId;
 	}
 }

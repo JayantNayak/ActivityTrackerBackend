@@ -2,9 +2,22 @@ package com.activitytracker.springboot.model;
 
 
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name="APP_USER")
@@ -14,29 +27,57 @@ public class User implements Serializable{
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Long id;
 
-	
+	@NotEmpty
 	@Column(name="FIRST_NAME", nullable=false)
 	private String firstname;
 	
-	
+	@NotEmpty
 	@Column(name="LAST_NAME", nullable=false)
 	private String lastname;
 	
 	
-	
+	@NotEmpty
 	@Column(name="EMAILID", nullable=false)
 	private String emailId;
 
-	
+	@NotEmpty
 	@Column(name="PASSWORD", nullable=false)
 	private String password;
 	
 	@Column(name="Associated_Sports")
 	@ElementCollection(targetClass=Integer.class)
 	private List<Integer> associatedSports ;
+	
+	
+	@OneToOne(mappedBy = "parentUser", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    UserRole userRole;
+	
+	@OneToMany(mappedBy = "parentUser", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    List<Yoga> yogaActivities;
+	
+	/*  public void addChild(Child child) {
+	        child.setParent(this);
+	        children.add(child);
+	    }
+
+	    public void removeChild(Child child) {
+	        children.remove(child);
+	        if (child != null) {
+	            child.setParent(null);
+	        }
+	    }*/
 
 	
 
+	/*public  UserRole getUserRole() {
+		return userRole;
+	}
+
+	public  void setUserRole(UserRole userRole) {
+		userRole.setParentUser(this);
+		this.userRole = userRole;
+	}
+*/
 	public  User(){}
 
 	public  User(String firstname,String lastname,String emailId,String password){

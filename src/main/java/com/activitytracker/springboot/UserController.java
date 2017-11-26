@@ -48,18 +48,15 @@ public class UserController {
 		return new ResponseEntity<User>(users.get(0), HttpStatus.OK);
 	}
 	@RequestMapping("/singleuser2")
-	public ResponseEntity<?> getSingleUserWithoutSports() {
+	public ResponseEntity<?> getSingleUserWithoutSports(UriComponentsBuilder ucBuilder) {
 		
-		User usersingle = new User("Jayant","Nayak","Jayant007","mypassword");
-		//usersingle.setId((long)123);
-		userService.saveUser(usersingle);
+		User usersingle2 = new User("Jayant","Nayak","Jayant007","mypassword");
+		userService.saveUser(usersingle2);
 		
-		List<User> users = userService.findAllUsers();
-		if (users.isEmpty()) {
-			return new ResponseEntity(HttpStatus.NO_CONTENT);
-			// You many decide to return HttpStatus.NOT_FOUND
-		}
-		return new ResponseEntity<User>(users.get(0), HttpStatus.OK);
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setLocation(ucBuilder.path("/api/user/{id}").buildAndExpand(usersingle2.getId()).toUri());
+		return new ResponseEntity<String>(headers, HttpStatus.CREATED);
 	}
 
 	// -------------------Retrieve All Users---------------------------------------------
@@ -86,6 +83,8 @@ public class UserController {
 					+ " not found"), HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<User>(user, HttpStatus.OK);
+		
+		
 	}
 
 	// -------------------Create a User-------------------------------------------
