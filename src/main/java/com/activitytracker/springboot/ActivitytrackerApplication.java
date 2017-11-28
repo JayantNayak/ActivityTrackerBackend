@@ -11,11 +11,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.activitytracker.springboot.security.BasicAuthenticationPoint;
+import com.activitytracker.springboot.security.CustomJdbcDaoImpl;
 import com.activitytracker.springboot.util.ApiPath;
 
 //@SpringBootApplication
@@ -85,9 +85,11 @@ public class ActivitytrackerApplication extends WebSecurityConfigurerAdapter {
 	 
 	 @Bean(name="userDetailsService")
 	 public UserDetailsService  userDetailsService(){
-		 JdbcDaoImpl jdbcImpl= new JdbcDaoImpl();
+		 //JdbcDaoImpl jdbcImpl= new JdbcDaoImpl();
+		 CustomJdbcDaoImpl jdbcImpl= new CustomJdbcDaoImpl();
 		 jdbcImpl.setDataSource(dataSource);
-		 jdbcImpl.setUsersByUsernameQuery("select id, password, 1 as enabled from app_user where id=?");
+		 
+		 jdbcImpl.setUsersByUsernameQuery("select emailid, password, 1 as enabled,id from app_user where emailid=?");
 		 jdbcImpl.setAuthoritiesByUsernameQuery("select parent_user_id, role from user_role where parent_user_id=?");
 		 
 		 
