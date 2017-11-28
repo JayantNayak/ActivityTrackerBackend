@@ -37,7 +37,7 @@ public class User implements Serializable{
 	
 	
 	@NotEmpty
-	@Column(name="EMAILID", nullable=false)
+	@Column(name="EMAILID", nullable=false, unique=true)
 	private String emailId;
 
 	@NotEmpty
@@ -49,6 +49,9 @@ public class User implements Serializable{
 	private List<Integer> associatedSports ;
 	
 	
+	@Column(name="ENABLED", nullable=false)
+	private int enabled=1;
+
 	@OneToOne(mappedBy = "parentUser", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     UserRole userRole;
 	
@@ -78,6 +81,10 @@ public class User implements Serializable{
 		this.userRole = userRole;
 	}
 */
+	
+	
+	
+	
 	public  User(){}
 
 	public  User(String firstname,String lastname,String emailId,String password){
@@ -133,7 +140,13 @@ public class User implements Serializable{
 	public String getPassword() {
 		return password;
 	}
+	public int getEnabled() {
+		return enabled;
+	}
 
+	public void setEnabled(int enabled) {
+		this.enabled = enabled;
+	}
 
 
 	@Override

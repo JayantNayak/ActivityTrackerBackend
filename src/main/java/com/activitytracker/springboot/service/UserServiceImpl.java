@@ -3,6 +3,7 @@ package com.activitytracker.springboot.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,12 +28,34 @@ public class UserServiceImpl implements UserService{
 	}
 
 	public void saveUser(User user) {
+		// Encode the password before storing it to database
+		String pswd = user.getPassword();
+		String cryptedPswd = new BCryptPasswordEncoder().encode(pswd);
+		user.setPassword(cryptedPswd);
+		
+		// enable the user 
+		user.setEnabled(1);
+		
 		userRepository.save(user);
 		/* create corresponding authentication in userrole*/
 		userRoleService.saveUserRole(new UserRole("USER",user));
 	}
+	
+	public void saveAdminUser(User user) {
+		// Encode the password before storing it to database
+		String pswd = user.getPassword();
+		String cryptedPswd = new BCryptPasswordEncoder().encode(pswd);
+		user.setPassword(cryptedPswd);
+		
+		// enable the user 
+		user.setEnabled(1);
+		userRepository.save(user);
+		/* create corresponding authentication in userrole*/
+		userRoleService.saveUserRole(new UserRole("ADMIN",user));
+	}
 
 	public void updateUser(User user){
+		
 		saveUser(user);
 	}
 
@@ -54,14 +77,14 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public boolean isUserExistWithEmail(String email) {
+	public Long isUserExistWithEmail(String email) {
 		// TODO Auto-generated method stub
 		List<User> usersWithSameEmail = userRepository.getUsersWithEmail(email);
-		if(usersWithSameEmail.size()>0)
+		if(usersWithSameEmail.size()==1)
 		{
-			return true;
+			return usersWithSameEmail.get(0).getId();
 		}
-		return false;
+		return 0l;
 	}
 
 }

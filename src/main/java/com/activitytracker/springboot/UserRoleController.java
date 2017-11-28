@@ -18,10 +18,11 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.activitytracker.springboot.model.User;
 import com.activitytracker.springboot.model.UserRole;
 import com.activitytracker.springboot.service.UserRoleService;
+import com.activitytracker.springboot.util.ApiPath;
 import com.activitytracker.springboot.util.CustomErrorType;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping(ApiPath.ADMIN_API)
 public class UserRoleController {
 	
 	public static final Logger logger = LoggerFactory.getLogger(UserRoleController.class);

@@ -19,7 +19,7 @@ public class BasicAuthenticationPoint extends BasicAuthenticationEntryPoint {
   }  
   @Override  
   public void afterPropertiesSet() throws Exception {  
-    setRealmName("Chandana");  
+    setRealmName("TEST REALM");  
     super.afterPropertiesSet();  
   }  
 } 

@@ -21,5 +21,7 @@ public interface UserService {
 
 	void updateUser(User user);
 	
-	boolean isUserExistWithEmail(String email);
+	Long isUserExistWithEmail(String email);
+	
+	void saveAdminUser(User user);
 }
