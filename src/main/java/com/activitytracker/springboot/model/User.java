@@ -19,6 +19,8 @@ import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.activitytracker.springboot.exposedmodel.UserClient;
+
 @Entity
 @Table(name="APP_USER")
 public class User implements Serializable{
@@ -185,6 +187,14 @@ public class User implements Serializable{
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", emailId=" + emailId + ",firstname=" + firstname + ",lastname=" + lastname + "]";
+	}
+	/**
+	 * Returns A minimalistic user entity
+	 * @return UserClient
+	 */
+	public UserClient getMinimalUser(){
+		return new UserClient(this);
+		
 	}
 
 

@@ -1,6 +1,7 @@
 package com.activitytracker.springboot;
 
-import java.util.ArrayList;
+import java.nio.charset.Charset;
+import java.util.Base64;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -11,13 +12,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.activitytracker.springboot.exposedmodel.UserClient;
 import com.activitytracker.springboot.model.User;
 import com.activitytracker.springboot.service.UserService;
 import com.activitytracker.springboot.util.ApiPath;
@@ -67,8 +68,8 @@ public class UserController {
 	@RequestMapping(value = ApiPath.USER_API+"/createUser", method = RequestMethod.POST)
 	public ResponseEntity<?> createUser(@RequestBody User user, UriComponentsBuilder ucBuilder) {
 		logger.info("Creating User : {}", user);
-		Long emailExist = userService.isUserExistWithEmail(user.getEmailId());
-		if ( emailExist>0L) {
+		User userExist = userService.isUserExistWithEmail(user.getEmailId());
+		if ( userExist!=null) {
 			logger.error("Unable to create. A User with emailID {} already exist", user.getEmailId());
 			return new ResponseEntity(new CustomErrorType("Unable to create. A User with emailId " + 
 			user.getEmailId() + " already exist."),HttpStatus.CONFLICT);
@@ -133,15 +134,27 @@ public class UserController {
 	// ---------------------------Return Userid ---------------------
 
 	
-	@RequestMapping(value=ApiPath.USER_API+"/checkEmailIdExist")
-	public ResponseEntity<?>  checkEmailId(@RequestParam("emailId") String emailId){
-		Long userId = userService.isUserExistWithEmail(emailId);
-		if(userId==0){
+	@RequestMapping(value=ApiPath.USER_API+"/userlogin",method = RequestMethod.GET, headers = { "Authorization" })
+	public ResponseEntity<?>  checkEmailId(@RequestHeader("Authorization") String authorization){
+		User userExist = null;
+		 if (authorization != null && authorization.startsWith("Basic")) {
+		        // Authorization: Basic base64credentials
+		        String base64Credentials = authorization.substring("Basic".length()).trim();
+		        String credentials = new String(Base64.getDecoder().decode(base64Credentials),
+		                Charset.forName("UTF-8"));
+		        // credentials = username:password
+		        final String[] values = credentials.split(":",2);
+		        String emailId = values[0];
+		        userExist = userService.isUserExistWithEmail(emailId);
+		if(userExist==null){
 			logger.error("EmailId " + emailId +" not registered.");
 			return new ResponseEntity(new CustomErrorType("EmailId " + emailId +" not registered."),
 					HttpStatus.NOT_FOUND);
-		}
-		return new ResponseEntity<Long>(userId, HttpStatus.OK);
+			}
+		
+		 }
+		 //userExist.set
+		 return new ResponseEntity<UserClient>(userExist.getMinimalUser(), HttpStatus.OK);
 	}
 	
 	
@@ -153,8 +166,8 @@ public class UserController {
 		User adminUser = new User("Jayant","Nayak","jayant@gmail.com","Admin123");
 		
 		logger.info("Creating User : {}", adminUser);
-		Long emailExist = userService.isUserExistWithEmail(adminUser.getEmailId());
-		if ( emailExist>0L) {
+		User userExist = userService.isUserExistWithEmail(adminUser.getEmailId());
+		if ( userExist != null) {
 			logger.error("Unable to create. A User with emailID {} already exist", adminUser.getEmailId());
 			return new ResponseEntity(new CustomErrorType("Unable to create admin User with emailId " + 
 					adminUser.getEmailId() + " already exist."),HttpStatus.CONFLICT);

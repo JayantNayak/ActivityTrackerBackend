@@ -77,14 +77,16 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public Long isUserExistWithEmail(String email) {
+	public User isUserExistWithEmail(String email) {
 		// TODO Auto-generated method stub
+		//email field is an unique so only each user will have a unique emailid
 		List<User> usersWithSameEmail = userRepository.getUsersWithEmail(email);
-		if(usersWithSameEmail.size()==1)
+		User userwithEmail = null;
+		if(usersWithSameEmail.size()>0)
 		{
-			return usersWithSameEmail.get(0).getId();
+			userwithEmail = usersWithSameEmail.get(0);
 		}
-		return 0l;
+		return userwithEmail;
 	}
 
 }
