@@ -42,7 +42,7 @@ public class Yoga {
 	
 
 	@Column(name = "USERID", nullable = false)
-	private long userId;
+	private long userid;
 
 	@ManyToOne
 	@JoinColumn(name = "PARENT_USER_ID", referencedColumnName = "ID", nullable=false, updatable=false)
@@ -50,11 +50,11 @@ public class Yoga {
 	
 	
 	public long getUserId() {
-		return userId;
+		return userid;
 	}
 
-	public void setUserId(long userId) {
-		this.userId = userId;
+	public void setUserId(long userid) {
+		this.userid = userid;
 	}
 
 	public void setParentUser(User parentUser) {
@@ -105,20 +105,20 @@ public class Yoga {
 
 	}
 
-	public Yoga(Long datetime, Long duration, int rating, String comment, Long userId) {
+	public Yoga(Long datetime, Long duration, int rating, String comment, Long userid) {
 
 		this.datetime = datetime;
 		this.duration = duration;
 		this.rating = rating;
 		this.comment = comment;
-		this.userId = userId;
+		this.userid = userid;
 	}
 
-	public Yoga(Long datetime, Long duration, int rating, Long userId) {
+	public Yoga(Long datetime, Long duration, int rating, Long userid) {
 
 		this.datetime = datetime;
 		this.duration = duration;
 		this.rating = rating;
-		this.userId = userId;
+		this.userid = userid;
 	}
 }
