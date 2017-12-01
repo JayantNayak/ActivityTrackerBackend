@@ -11,16 +11,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import com.activitytracker.springboot.model.Shooting;
 import com.activitytracker.springboot.model.User;
 import com.activitytracker.springboot.model.Yoga;
+import com.activitytracker.springboot.service.UserService;
 import com.activitytracker.springboot.service.YogaActivityService;
+import com.activitytracker.springboot.util.ApiPath;
 import com.activitytracker.springboot.util.CustomErrorType;
 
 @RestController
@@ -32,7 +34,8 @@ public class ActivityYogaController {
 	@Autowired
 	private YogaActivityService yogaService;
 	//yogaService = new YogaServiceImpl();
-	
+	@Autowired
+	private UserService userService;
 		
 	
 	@RequestMapping(value = "/api/activity/singleyoga")
@@ -70,14 +73,21 @@ public class ActivityYogaController {
 
 		// -------------------Create a Yoga Activity-------------------------------------------
 
-		@RequestMapping(value = YogaActivityService.YOGA_SVC_PATH, method = RequestMethod.POST)
-		public ResponseEntity<?> createUser(@RequestBody Yoga activity, UriComponentsBuilder ucBuilder) {
+		@RequestMapping(value = YogaActivityService.YOGA_SVC_PATH, method = RequestMethod.POST,headers = { "Authorization" })
+		public ResponseEntity<?> createUser(@RequestBody Yoga activity, @RequestHeader("Authorization") String authorization) {
 			logger.info("Creating Activity Yoga : {}", activity);
-
+			
+			String logErrorMsg =  "Unable to create yoga activity invalid credentials.";
+			ApiPath apiUtil = new ApiPath();
+			User userExist = apiUtil.getUserForCredential(authorization,userService);
+			if ( userExist==null) {
+				logger.error(logErrorMsg);
+				return new ResponseEntity(new CustomErrorType(logErrorMsg),HttpStatus.CONFLICT);
+			}
+			activity.setUserId(userExist.getId());
 			yogaService.saveActivity(activity);
 
 			HttpHeaders headers = new HttpHeaders();
-			headers.setLocation(ucBuilder.path("/api/activity/{id}").buildAndExpand(activity.getId()).toUri());
 			return new ResponseEntity<String>(headers, HttpStatus.CREATED);
 		}
 		

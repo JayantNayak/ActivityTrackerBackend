@@ -153,8 +153,9 @@ public class UserController {
 			}
 		
 		 }
+		
 		 //userExist.set
-		 return new ResponseEntity<UserClient>(userExist.getMinimalUser(), HttpStatus.OK);
+		 return new ResponseEntity<UserClient>(new UserClient(userExist), HttpStatus.OK);
 	}
 	
 	
