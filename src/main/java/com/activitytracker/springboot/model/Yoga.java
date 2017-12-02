@@ -29,9 +29,9 @@ public class Yoga {
 	private Long duration;
 	
 
-	@Column(name = "DATETIME", nullable = false)
+	@Column(name = "DATE", nullable = false)
 	// @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-	private Long datetime;
+	private Long date;
 
 	@Column(name = "COMMENT")
 	private String comment;
@@ -69,12 +69,12 @@ public class Yoga {
 		this.rating = rating;
 	}
 
-	public Long getDateTime() {
-		return datetime;
+	public Long getDate() {
+		return date;
 	}
 
-	public void setDateTime(Long datetime) {
-		this.datetime = datetime;
+	public void setDate(Long date) {
+		this.date = date;
 	}
 
 	public String getComment() {
@@ -105,18 +105,18 @@ public class Yoga {
 
 	}
 
-	public Yoga(Long datetime, Long duration, int rating, String comment, Long userid) {
+	public Yoga(Long date, Long duration, int rating, String comment, Long userid) {
 
-		this.datetime = datetime;
+		this.date = date;
 		this.duration = duration;
 		this.rating = rating;
 		this.comment = comment;
 		this.userid = userid;
 	}
 
-	public Yoga(Long datetime, Long duration, int rating, Long userid) {
+	public Yoga(Long date, Long duration, int rating, Long userid) {
 
-		this.datetime = datetime;
+		this.date = date;
 		this.duration = duration;
 		this.rating = rating;
 		this.userid = userid;
