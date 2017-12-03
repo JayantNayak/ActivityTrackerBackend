@@ -76,4 +76,12 @@ public class YogaServiceImpl implements YogaActivityService{
 		//return yogaRepository.getActivitiesForUserFromDate(userid);
 	}
 
+	@Override
+	public List<Yoga> getActivitiesForUser(long userid) {
+
+		
+		return yogaRepository.getActivitiesForUser(userid);
+		
+	}
+
 }

@@ -14,5 +14,11 @@ public interface YogaRepository extends JpaRepository<Yoga, Long> {
 	 List<Yoga> getActivitiesForUserFromDate(@Param("userid") long userid);*/
 
 	 //List<Yoga> getActivitiesForUserFromDate(@Param("userid") long userid, @Param("startdate")String startdate);
+	
+	
+	
+	//@Query("select y from Yoga y where y.userid = :userid")
+	@Query("select y from Yoga y  where y.userid = :userid order by date asc")
+	 List<Yoga> getActivitiesForUser(@Param("userid") long userid);
 	 
 }

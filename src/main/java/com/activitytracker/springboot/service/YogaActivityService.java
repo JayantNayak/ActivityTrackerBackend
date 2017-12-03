@@ -9,6 +9,7 @@ public interface YogaActivityService {
 
 	// The path where we expect the VideoSvc to live
 	public static final String YOGA_SVC_PATH = ApiPath.USER_API+"/activity/yoga";
+	public static final String YOGA_ADMIN_SVC_PATH = ApiPath.ADMIN_API+"/activity/yoga";
 
 	void deleteActivityById(Long id);
 
@@ -22,6 +23,8 @@ public interface YogaActivityService {
 	Yoga findById(Long id);
 
 	List<Yoga> getActivitiesForUserFromDate(long userid, String startDate);
+	
+	List<Yoga> getActivitiesForUser(long userid);
 
 	void saveActivity(Yoga activity);
 

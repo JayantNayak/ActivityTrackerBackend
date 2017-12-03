@@ -57,9 +57,9 @@ public class ActivityYogaController {
 		
 	}
 
-		// -------------------Retrieve All Yoga activities---------------------------------------------
+		// -------------------Retrieve All Yoga activities For all users---------------------------------------------
 
-		@RequestMapping(value = YogaActivityService.YOGA_SVC_PATH, method = RequestMethod.GET)
+		@RequestMapping(value = YogaActivityService.YOGA_ADMIN_SVC_PATH, method = RequestMethod.GET)
 		public ResponseEntity<List<Yoga>> listAllYogaActivities() {
 			
 			List<Yoga> activities = yogaService.findAllActivities();
@@ -70,6 +70,25 @@ public class ActivityYogaController {
 			}*/
 			return new ResponseEntity<List<Yoga>>(activities, HttpStatus.OK);
 		}
+		
+		// --- Retrieve all yoga activities for a user-----
+		
+				@RequestMapping(value = YogaActivityService.YOGA_SVC_PATH, method = RequestMethod.GET,headers = { "Authorization" })
+				public ResponseEntity<List<Yoga>> getAllYogaForUser(@RequestHeader("Authorization") String authorization) {
+					
+					
+					logger.info("getAllYogaForUser");
+					
+					String logErrorMsg =  "Unable to retrieve yoga activities invalid credentials.";
+					ApiPath apiUtil = new ApiPath();
+					User userExist = apiUtil.getUserForCredential(authorization,userService);
+					if ( userExist==null) {
+						logger.error(logErrorMsg);
+						return new ResponseEntity(new CustomErrorType(logErrorMsg),HttpStatus.CONFLICT);
+					}
+					
+					return new ResponseEntity<List<Yoga>>(yogaService.getActivitiesForUser(userExist.getId()),HttpStatus.OK);
+				}
 
 		// -------------------Create a Yoga Activity-------------------------------------------
 
@@ -119,36 +138,16 @@ public class ActivityYogaController {
 			return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
 		}
 		
+		//------------retrieve by date
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	
-	// -- Retrieve yoga activities for a particular user-----
-		
-		@RequestMapping(value="/activity/useryoga/{userId}")
+	/*	@RequestMapping(value = YogaActivityService.YOGA_SVC_PATH, method = RequestMethod.GET,headers = { "Authorization" })
 		public ResponseEntity<List<Yoga>> getYogaForUser(@PathVariable("userId") long userId,
 			       @RequestParam(value="startdate", required=true) String startDate) {
 			
 			return new ResponseEntity<List<Yoga>>(yogaService.getActivitiesForUserFromDate(userId,startDate),HttpStatus.OK);
-		}
+		}*/
+
 		
-		
-		
-		
-	
-		
-		
-		
-		
-	
 	
 	 @RequestMapping("/display")
 	    public String display() {
