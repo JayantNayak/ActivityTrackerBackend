@@ -6,53 +6,54 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.activitytracker.springboot.model.Exercise;
 import com.activitytracker.springboot.model.User;
 import com.activitytracker.springboot.model.Yoga;
-import com.activitytracker.springboot.repository.YogaRepository;
+import com.activitytracker.springboot.repository.ExerciseRepository;
 
 
 
-@Service("yogaService")
+@Service("exerciseService")
 @Transactional
-public class YogaServiceImpl implements YogaActivityService{
+public class ExerciseServiceImpl implements ExerciseActivityService{
 
 	@Autowired
-	private YogaRepository yogaRepository;
+	private ExerciseRepository exerciseRepository;
 	
 	@Autowired
 	UserService userService;
 
 	@Override
-	public void saveActivity(Yoga activity) {
+	public void saveActivity(Exercise activity) {
 		User parentUser = userService.findById(activity.getUserId());
 		activity.setParentUser(parentUser);
-		yogaRepository.save(activity);
+		exerciseRepository.save(activity);
 		
 		
 	}
 
 	@Override
-	public void updateActivity(Yoga activity) {
+	public void updateActivity(Exercise activity) {
 		saveActivity(activity);
 		
 	}
 
 	@Override
 	public void deleteActivityById(Long id) {
-		yogaRepository.delete(id);
+		exerciseRepository.delete(id);
 		List<Integer> a;
 		
 	}
 
 	@Override
 	public void deleteAllActivities() {
-		yogaRepository.deleteAll();
+		exerciseRepository.deleteAll();
 		
 	}
 
 	@Override
-	public List<Yoga> findAllActivities() {
-		return  yogaRepository.findAll();
+	public List<Exercise> findAllActivities() {
+		return  exerciseRepository.findAll();
 		
 	}
 
@@ -63,23 +64,22 @@ public class YogaServiceImpl implements YogaActivityService{
 	}
 
 	@Override
-	public Yoga findById(Long id) {
-		return yogaRepository.findOne(id);
+	public Exercise findById(Long id) {
+		return exerciseRepository.findOne(id);
 	}
 	
 	
 	@Override
-	public List<Yoga> getActivitiesForUserFromDate(long userid, String startDate) {
+	public List<Exercise> getActivitiesForUserFromDate(long userid, String startDate) {
 		
 		return null;
-		// uncomment
-		//return yogaRepository.getActivitiesForUserFromDate(userid);
+		
 	}
 
 	@Override
-	public List<Yoga> getActivitiesForUser(long userid) {
+	public List<Exercise> getActivitiesForUser(long userid) {
 
-		return yogaRepository.getActivitiesForUser(userid);
+		return exerciseRepository.getActivitiesForUser(userid);
 		
 	}
 

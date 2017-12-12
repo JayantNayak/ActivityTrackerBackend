@@ -19,36 +19,27 @@ public class Yoga {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	
 
 	@Column(name = "DURATION", nullable = false)
-	// @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDuration")
-	// @Type(type="org.joda.time.contrib.hibernate.PersistentDuration")
-	// @Type(type="org.joda.time.Duration")
+
 	private Long duration;
-	
 
 	@Column(name = "DATE", nullable = false)
-	// @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
 	private Long date;
 
 	@Column(name = "COMMENT")
 	private String comment;
 
-
 	@Column(name = "RATING", nullable = false)
 	private int rating;
-	
 
 	@Column(name = "USERID", nullable = false)
 	private long userid;
 
 	@ManyToOne
-	@JoinColumn(name = "PARENT_USER_ID", referencedColumnName = "ID", nullable=false, updatable=false)
+	@JoinColumn(name = "PARENT_USER_ID", referencedColumnName = "ID", nullable = false, updatable = false)
 	private User parentUser;
-	
-	
+
 	public long getUserId() {
 		return userid;
 	}

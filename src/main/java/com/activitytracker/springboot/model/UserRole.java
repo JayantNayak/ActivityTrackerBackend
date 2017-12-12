@@ -25,30 +25,30 @@ public class UserRole implements Serializable {
 	@Column(name = "ROLE", nullable = false)
 	private String role;
 
-	//@OneToOne(cascade = CascadeType.ALL)
+	// @OneToOne(cascade = CascadeType.ALL)
 	@OneToOne
 	@JoinColumn(name = "parent_user_id", unique = true, referencedColumnName = "ID", nullable = false)
 	private User parentUser;
 
-	public  Long getId() {
+	public Long getId() {
 		return id;
 	}
 
 	// not required to expose the parent user
 	// uncomment only when developing
-	/*public  User getParentUser() {
-		return parentUser;
-	}*/
+	/*
+	 * public User getParentUser() { return parentUser; }
+	 */
 
-	public  String getRole() {
+	public String getRole() {
 		return role;
 	}
 
-	public  void setId(Long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public  void setParentUser(User parentUser) {
+	public void setParentUser(User parentUser) {
 		this.parentUser = parentUser;
 	}
 
@@ -58,13 +58,15 @@ public class UserRole implements Serializable {
 	 * @OneToOne(cascade = CascadeType.ALL) private Long userId;
 	 */
 
-	public  void setRole(String role) {
+	public void setRole(String role) {
 		this.role = role;
 	}
-	public  UserRole(){}
-	
-	public UserRole(String role, User parentUser){
-		this.role =role;
+
+	public UserRole() {
+	}
+
+	public UserRole(String role, User parentUser) {
+		this.role = role;
 		this.parentUser = parentUser;
 	}
 

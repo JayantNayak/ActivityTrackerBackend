@@ -58,6 +58,11 @@ public class User implements Serializable{
 	@OneToMany(mappedBy = "parentUser", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     List<Yoga> yogaActivities;
 	
+	@OneToMany(mappedBy = "parentUser", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    List<Shooting> shootingActivities;
+	
+	@OneToMany(mappedBy = "parentUser", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    List<Exercise> exerciseActivities;
 	/*  public void addChild(Child child) {
 	        child.setParent(this);
 	        children.add(child);
