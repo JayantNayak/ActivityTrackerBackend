@@ -18,7 +18,7 @@ public class Shooting {
 	private Long id;
 
 	@Column(name = "TOTALSCORE", nullable = false)
-	private int totalscore;
+	private float totalscore;
 
 	@Column(name = "TOTALSHOTS", nullable = false)
 	private int totalshots;
@@ -71,7 +71,7 @@ public class Shooting {
 		this.id = id;
 	}
 
-	public int getTotalscore() {
+	public float getTotalscore() {
 		return totalscore;
 	}
 
@@ -91,7 +91,7 @@ public class Shooting {
 
 	}
 
-	public Shooting(int totalscore, int totalshots, Long date, Long userid) {
+	public Shooting(float totalscore, int totalshots, Long date, Long userid) {
 		this.totalscore = totalscore;
 		this.totalshots = totalshots;
 		this.date = date;
@@ -99,7 +99,7 @@ public class Shooting {
 
 	}
 
-	public Shooting(int totalscore, int totalshots, Long date, String comment, Long userid) {
+	public Shooting(float totalscore, int totalshots, Long date, String comment, Long userid) {
 		this.totalscore = totalscore;
 		this.totalshots = totalshots;
 		this.date = date;
