@@ -164,7 +164,7 @@ public class UserController {
 
 	@RequestMapping(value = ApiPath.USER_API+"/createAnOneTimeAdminUser")
 	public ResponseEntity<?> createAnOneTimeAdminUser() {
-		User adminUser = new User("Jayant","Nayak","jayant@gmail.com","Admin123");
+		User adminUser = new User("Jayant","Nayak","jayant.kumar.nayak92@gmail.com","Admin123");
 		
 		logger.info("Creating User : {}", adminUser);
 		User userExist = userService.isUserExistWithEmail(adminUser.getEmailId());
